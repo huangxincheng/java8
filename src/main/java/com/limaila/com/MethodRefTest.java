@@ -7,6 +7,7 @@ import javax.management.openmbean.CompositeDataSupport;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.*;
 
 /**
@@ -131,6 +132,20 @@ class Emp {
     }
 
     public Emp(){}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Emp emp = (Emp) o;
+        return age == emp.age &&
+                Objects.equals(name, emp.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(age, name);
+    }
 
     @Override
     public String toString() {
