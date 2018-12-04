@@ -57,4 +57,23 @@ public class StreamApiTest3 {
         }
         return characters.stream();
     }
+
+    /*
+		sorted()——自然排序
+		sorted(Comparator com)——定制排序
+	 */
+    @Test
+    public void test2() {
+        emps.stream().map(Emp::getName).sorted().forEach(System.out::println);
+
+        System.out.println("===============================================");
+
+        emps.stream().sorted((o1,o2) -> {
+            if (o1.getAge() == o2.getAge()) {
+                return o1.getName().compareTo(o2.getName());
+            } else {
+                return Integer.compare(o1.getAge(),o2.getAge());
+            }
+        }).forEach(System.out::println);
+    }
 }
