@@ -2,18 +2,20 @@ package com.limaila.com;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 /**
- * Author: huangxincheng
- * <p>
- * <p>
- **/
+ * 一、 Stream 的操作步骤
+ *
+ * 1. 创建 Stream
+ *
+ * 2. 中间操作
+ *
+ * 3. 终止操作
+ */
 public class StreamApiTest3 {
 
     List<Emp> emps = Arrays.asList(
@@ -25,55 +27,46 @@ public class StreamApiTest3 {
             new Emp(114,"a114")
     );
 
-    //2. 中间操作
+    //3. 终止操作
 	/*
-		映射
-		map——接收 Lambda ， 将元素转换成其他形式或提取信息。接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素。
-		flatMap——接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流
+		allMatch——检查是否匹配所有元素
+		anyMatch——检查是否至少匹配一个元素
+		noneMatch——检查是否没有匹配的元素
+		findFirst——返回第一个元素
+		findAny——返回当前流中的任意元素
+		count——返回流中元素的总个数
+		max——返回流中最大值
+		min——返回流中最小值
 	 */
-    @Test
-    public void test1() {
-        List<String> strList = Arrays.asList("aaa", "bbb", "ccc", "ddd", "eee");
-        strList.stream().map(String::toUpperCase).forEach(System.out::println);
-        System.out.println("================================");
-        emps.stream().map(Emp::getAge).forEach(System.out::println);
 
-        System.out.println("================================2");
-        Stream<Stream<Character>> streamStream = strList.stream().map(this::getStreamChar);
-        streamStream.forEach((s) -> {
-            s.forEach(System.out::println);
-        });
-        System.out.println("================================3");
-        Stream<Character> characterStream = strList.stream().flatMap(this::getStreamChar);
-        characterStream.forEach(System.out::println);
+	@Test
+	public void test1() {
+        boolean b1 = emps.stream().allMatch((t) -> t.getName().equals("a114"));
+        System.out.println(b1);
 
+        boolean b2 = emps.stream().anyMatch((t) -> t.getName().equals("a114"));
+        System.out.println(b2);
 
+        boolean b3 = emps.stream().noneMatch((t) -> t.getName().equals("a114"));
+        System.out.println(b3);
+
+        Optional<Emp> b4 =
+                emps.stream().sorted(Comparator.comparingInt(Emp::getAge)).findFirst();
+        System.out.println(b4.get());
+
+        Optional<Emp> b5 = emps.stream().sorted(Comparator.comparingInt(Emp::getAge)).findAny();
+        System.out.println(b5.get());
+
+        long count = emps.stream().count();
+        System.out.println(count);
+
+        // 获取排在最后面的那一个
+        Optional<Emp> max = emps.stream().max((o1, o2) -> Integer.compare(o1.getAge(), o2.getAge()));
+        System.out.println(max.get());
+
+        // 获取排在最前面的那一个
+        Optional<Emp> min = emps.stream().min((o1, o2) -> Integer.compare(o1.getAge(), o2.getAge()));
+        System.out.println(min.get());
     }
 
-    public Stream<Character> getStreamChar(String str) {
-        List<Character> characters = new ArrayList<>();
-        for (char c : str.toCharArray()) {
-            characters.add(c);
-        }
-        return characters.stream();
-    }
-
-    /*
-		sorted()——自然排序
-		sorted(Comparator com)——定制排序
-	 */
-    @Test
-    public void test2() {
-        emps.stream().map(Emp::getName).sorted().forEach(System.out::println);
-
-        System.out.println("===============================================");
-
-        emps.stream().sorted((o1,o2) -> {
-            if (o1.getAge() == o2.getAge()) {
-                return o1.getName().compareTo(o2.getName());
-            } else {
-                return Integer.compare(o1.getAge(),o2.getAge());
-            }
-        }).forEach(System.out::println);
-    }
 }
