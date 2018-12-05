@@ -1,4 +1,4 @@
-package com.limaila.com;
+package com.limaila.com.stream;
 
 import org.junit.Test;
 
@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
  * 3. 终止操作
  */
 public class StreamApiTest3 {
+
+
 
     List<Emp> emps = Arrays.asList(
             new Emp(111,"a111"),
@@ -217,4 +219,42 @@ public class StreamApiTest3 {
         System.out.println(collect.get());
     }
 
+    static class Emp {
+        private int age;
+
+        private String name;
+
+
+        public Emp(int age, String name) {
+            this.age = age;
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "Emp{" +
+                    "age=" + age +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
+    }
+
 }
+
+

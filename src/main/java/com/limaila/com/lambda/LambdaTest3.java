@@ -1,4 +1,4 @@
-package com.limaila.com;
+package com.limaila.com.lambda;
 
 import org.junit.Test;
 

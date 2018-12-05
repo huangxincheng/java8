@@ -1,5 +1,6 @@
-package com.limaila.com;
+package com.limaila.com.stream;
 
+import com.limaila.com.lambda.Emp;
 import org.junit.Test;
 
 import java.util.ArrayList;

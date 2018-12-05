@@ -1,4 +1,4 @@
-package com.limaila.com;
+package com.limaila.com.stream;
 
 import org.junit.Test;
 
